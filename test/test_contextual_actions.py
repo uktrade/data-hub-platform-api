@@ -2,14 +2,7 @@ import pytest
 
 from platform_api.redis_action_context import RedisActionContext
 from platform_api.use_case.get_contextual_actions import GetContextualActions
-
-
-class RegisterActionContext:
-    def __init__(self, action_context_gateway):
-        self.action_context_gateway = action_context_gateway
-
-    def __call__(self, id_):
-        self.action_context_gateway.register_context(id_)
+from platform_api.use_case.register_action_context import RegisterActionContext
 
 
 @pytest.fixture(autouse=True)
