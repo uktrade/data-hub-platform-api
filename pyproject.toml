@@ -4,6 +4,9 @@ version = "0.0.1"
 description = ""
 authors = ["Craig J. Bass <1889973+craigjbass@users.noreply.github.com>"]
 license = "MIT"
+packages = [
+    { include = "platform_api" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
