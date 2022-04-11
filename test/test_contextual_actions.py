@@ -1,25 +1,7 @@
 import pytest
 
 from platform_api.redis_action_context import RedisActionContext
-
-
-class GetContextualActions:
-    def __init__(self, action_context_gateway):
-        self.action_context_gateway = action_context_gateway
-
-    def __call__(self, context_id):
-        context = self.action_context_gateway.get_context(context_id)
-        if context is None:
-            return {
-                'success': False,
-                'errors': ['NO_ACTION_CONTEXT_DEFINED']
-
-            }
-
-        return {
-            'success': True,
-            'actions': []
-        }
+from platform_api.use_case.get_contextual_actions import GetContextualActions
 
 
 class RegisterActionContext:
@@ -55,4 +37,3 @@ def test_can_get_no_contextual_actions():
     contextual_action = response['actions']
     assert response['success']
     assert [] == contextual_action
-
