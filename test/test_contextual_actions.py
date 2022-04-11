@@ -1,17 +1,18 @@
 import pytest
 
 from platform_api.redis_action_context import RedisActionContext
+from platform_api.redis_connection import RedisConnection
 from platform_api.use_case.get_contextual_actions import GetContextualActions
 from platform_api.use_case.register_action_context import RegisterActionContext
 
 
 @pytest.fixture(autouse=True)
 def before_each():
-    RedisActionContext().flush_database()
+    RedisConnection().get_client().flushdb()
 
 
 def test_can_error_when_no_context_registered():
-    action_context_gateway = RedisActionContext()
+    action_context_gateway = RedisActionContext(RedisConnection().get_client())
 
     get_contextual_actions = GetContextualActions(action_context_gateway)
     response = get_contextual_actions('dit:datahub:company')
@@ -20,7 +21,7 @@ def test_can_error_when_no_context_registered():
 
 
 def test_can_get_no_contextual_actions():
-    action_context_gateway = RedisActionContext()
+    action_context_gateway = RedisActionContext(RedisConnection().get_client())
 
     register_action_context = RegisterActionContext(action_context_gateway)
     register_action_context('dit:datahub:company')
