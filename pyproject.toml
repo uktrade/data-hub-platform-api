@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "data-hub-platform-api"
+version = "0.0.1"
+description = ""
+authors = ["Craig J. Bass <1889973+craigjbass@users.noreply.github.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.1.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
