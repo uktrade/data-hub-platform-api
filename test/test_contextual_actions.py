@@ -5,9 +5,9 @@ from platform_api.use_case_executor import UseCaseExecutor
 
 @pytest.fixture()
 def execute():
-    executor = UseCaseExecutor()
-    executor._redis.get_client().flushdb()
-    yield executor
+    execute = UseCaseExecutor()
+    execute('flush_redis_database')
+    yield execute
 
 
 def test_can_error_when_no_context_registered(execute):

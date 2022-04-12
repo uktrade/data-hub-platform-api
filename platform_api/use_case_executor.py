@@ -17,6 +17,7 @@ class UseCaseExecutor:
         self._redis = RedisConnection()
         action_context_gateway = RedisActionContext(self._redis.get_client())
         self.use_cases = {
+            'flush_redis_database': lambda: self._redis.get_client().flushdb(),
             'get_contextual_actions': GetContextualActions(action_context_gateway),
             'register_action_context': RegisterActionContext(action_context_gateway),
             'describe_action_context': DescribeActionContext(action_context_gateway),
