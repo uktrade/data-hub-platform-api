@@ -22,7 +22,7 @@ To watch on files for a continuous testing experience `make watch-test`
 Start redis with `make .redis`
 Stop redis with `make stop`
 
-The Makefile starts a redis server with docker-compose, but avoid rerunning docker-compose commands by creating a `.redis` target file.
-The target file is deleted when `make stop` is run.
+The Makefile starts a redis server with docker-compose, but avoid rerunning docker-compose commands by creating
+a `.redis` target file. The target file is deleted when `make stop` is run.
 
 If for any reason the `.redis` file hangs around longer than the redis server stays alive, the tests will not pass. 

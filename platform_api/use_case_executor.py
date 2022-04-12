@@ -12,6 +12,7 @@ class UseCaseNotFoundError(Exception):
 class UseCaseMissingCallDunderMethodError(Exception):
     pass
 
+
 class UseCaseExecutor:
     def __init__(self):
         self._redis = RedisConnection()
