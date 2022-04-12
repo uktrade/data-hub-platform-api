@@ -2,6 +2,8 @@ EXECUTABLES = poetry docker-compose
 K := $(foreach exec,$(EXECUTABLES),\
         $(if $(shell which $(exec)),some string,$(error "No $(exec) in PATH")))
 
+TEST_COMMAND = poetry run pytest -vvv $(TARGET) || (scripts/test_failure.sh $$?)
+
 .PHONY: test stop
 
 .redis:
@@ -11,7 +13,11 @@ K := $(foreach exec,$(EXECUTABLES),\
 	@echo -e "\033[0;35m(We create a temporary .redis file in the project root to save a call to docker-compose every time we run tests.)\033[0m"
 
 test: .redis
-	poetry run pytest $(TARGET) || (scripts/test_failure.sh $$?)
+	$(TEST_COMMAND)
+
+watch-test:
+	make test || exit 0
+	poetry run watchmedo shell-command --patterns="*.py" --recursive --drop --command="make test" .
 
 stop:
 	@echo -e "\033[0;35mStopping Redis...\033[0m"

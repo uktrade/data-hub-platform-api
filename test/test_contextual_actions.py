@@ -22,3 +22,9 @@ def test_can_get_no_contextual_actions(execute):
     contextual_action = response['actions']
     assert response['success']
     assert [] == contextual_action
+
+
+def test_can_describe_context(execute):
+    execute('register_action_context', 'dit:datahub:company')
+    response = execute('describe_action_context', 'dit:datahub:company')
+    assert {'success': True, 'object': {'id': 'dit:datahub:company'}} == response
