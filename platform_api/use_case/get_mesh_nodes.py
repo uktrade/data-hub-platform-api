@@ -4,9 +4,9 @@ class GetMeshNodes:
 
     def __call__(self):
         nodes = [{
-            'href': 'https://my-service.local/mesh',
-            'id': 'my-service'
-        } for _ in self._get_nodes()]
+            'href': node.href,
+            'id': node.id_
+        } for node in self._get_nodes()]
 
         return {
             'success': True,

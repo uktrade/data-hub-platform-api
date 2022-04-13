@@ -30,3 +30,27 @@ def test_can_get_one_mesh_node(execute):
             'href': 'https://my-service.local/mesh',
         }
     ]
+
+
+def test_can_get_two_mesh_nodes(execute):
+    execute(
+        'ping_mesh',
+        id_='my-service',
+        href='https://my-service.local/mesh',
+    )
+    execute(
+        'ping_mesh',
+        id_='data-hub',
+        href='https://data-hub.local/mesh',
+    )
+    response = execute('get_mesh_nodes')
+    assert response['nodes'] == [
+        {
+            'id': 'my-service',
+            'href': 'https://my-service.local/mesh',
+        },
+        {
+            'id': 'data-hub',
+            'href': 'https://data-hub.local/mesh',
+        }
+    ]

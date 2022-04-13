@@ -6,4 +6,4 @@ class PingMesh:
         self.mesh_nodes_gateway = mesh_nodes_gateway
 
     def __call__(self, id_, href):
-        self.mesh_nodes_gateway.add(MeshNode())
+        self.mesh_nodes_gateway.add(MeshNode(id_, href))
