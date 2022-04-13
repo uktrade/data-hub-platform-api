@@ -16,8 +16,8 @@ test: .redis
 	$(TEST_COMMAND)
 
 watch-test:
-	make test || exit 0
-	poetry run watchmedo shell-command --patterns="*.py" --recursive --drop --command="make test" .
+	@make test --silent || exit 0
+	@poetry run watchmedo shell-command --patterns="*.py" --recursive --drop --command="make test --silent" .
 
 stop:
 	@echo -e "\033[0;35mStopping Redis...\033[0m"
