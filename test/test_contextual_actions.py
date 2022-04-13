@@ -18,7 +18,7 @@ def service_simulator():
     httpretty.disable()
 
 
-def test_can_get_no_contextual_actions(execute):
+def test_can_get_no_tagged_descriptors(execute):
     response = execute('get_contextual_actions', 'dit:datahub:company')
 
     assert response['success']
@@ -28,7 +28,7 @@ def test_can_get_no_contextual_actions(execute):
     }
 
 
-def test_can_get_one_contextual_action(execute, service_simulator):
+def test_can_get_one_tagged_descriptor(execute, service_simulator):
     execute('ping_mesh', id_='my-service', href='https://my-service.local/mesh')
 
     my_service_response = {
