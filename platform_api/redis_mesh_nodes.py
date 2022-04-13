@@ -11,7 +11,7 @@ class RedisMeshNodes:
         self._redis_client.hset('1', '2', '3')
 
     def get_all(self):
-        return self._redis_client.hgetall('1')
+        return self._redis_client.hgetall('1').items()
 
     # def register_context(self, id_):
     #     root_schema = {

@@ -14,4 +14,4 @@ class GetMeshNodes:
         }
 
     def _get_nodes(self):
-        return self.mesh_nodes_gateway.get_all().items()
+        return self.mesh_nodes_gateway.get_all()
