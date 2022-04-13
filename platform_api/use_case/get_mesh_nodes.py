@@ -4,14 +4,12 @@ class GetMeshNodes:
 
     def __call__(self):
         mesh_nodes = self.mesh_nodes_gateway.get_all()
-        nodes = []
-        for _ in mesh_nodes.items():
-            nodes.append(
-                {
-                    'href': 'https://my-service.local/mesh',
-                    'id': 'my-service'
-                }
-            )
+        
+        nodes = [{
+            'href': 'https://my-service.local/mesh',
+            'id': 'my-service'
+        } for _ in mesh_nodes.items()]
+
         return {
             'success': True,
             'nodes': nodes,
