@@ -19,7 +19,7 @@ def service_simulator():
 
 
 def test_can_get_no_tagged_descriptors(execute):
-    response = execute('get_contextual_actions', 'dit:datahub:company')
+    response = execute('get_tagged_descriptors', 'dit:datahub:company')
 
     assert response['success']
     assert response['alps'] == {
@@ -62,7 +62,7 @@ def test_can_get_one_tagged_descriptor(execute, service_simulator):
         body=my_service_response
     )
 
-    response = execute('get_contextual_actions', 'dit:datahub:company')
+    response = execute('get_tagged_descriptors', 'dit:datahub:company')
     assert response['alps']['descriptor'] == [
         {
             "name": "dit:my-service:ReferForHelp",
