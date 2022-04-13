@@ -1,4 +1,4 @@
-class GetContextualActions:
+class GetTaggedDescriptors:
     def __init__(self, redis_mesh_nodes):
         self.redis_mesh_nodes = redis_mesh_nodes
 
