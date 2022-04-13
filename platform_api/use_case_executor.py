@@ -2,6 +2,7 @@ from platform_api.redis_action_context import RedisActionContext
 from platform_api.redis_connection import RedisConnection
 from platform_api.use_case.describe_action_context import DescribeActionContext
 from platform_api.use_case.get_contextual_actions import GetContextualActions
+from platform_api.use_case.get_mesh_nodes import GetMeshNodes
 from platform_api.use_case.register_action_context import RegisterActionContext
 
 
@@ -22,6 +23,7 @@ class UseCaseExecutor:
             'get_contextual_actions': GetContextualActions(action_context_gateway),
             'register_action_context': RegisterActionContext(action_context_gateway),
             'describe_action_context': DescribeActionContext(action_context_gateway),
+            'get_mesh_nodes': GetMeshNodes()
         }
 
     def __call__(self, use_case, *args, **kwargs):
