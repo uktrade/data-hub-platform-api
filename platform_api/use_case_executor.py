@@ -19,7 +19,7 @@ class UseCaseExecutor:
         mesh_nodes_gateway = RedisMeshNodes(self._redis.get_client())
         self.use_cases = {
             'flush_redis_database': lambda: self._redis.get_client().flushdb(),
-            'get_contextual_actions': GetContextualActions(),
+            'get_contextual_actions': GetContextualActions(mesh_nodes_gateway),
             'get_mesh_nodes': GetMeshNodes(mesh_nodes_gateway),
             'ping_mesh': PingMesh(mesh_nodes_gateway),
         }
