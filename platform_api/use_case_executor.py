@@ -1,6 +1,6 @@
 from platform_api.redis_connection import RedisConnection
 from platform_api.redis_mesh_nodes import RedisMeshNodes
-from platform_api.use_case.get_contextual_actions import GetTaggedDescriptors
+from platform_api.use_case.get_tagged_descriptors import GetTaggedDescriptors
 from platform_api.use_case.get_mesh_nodes import GetMeshNodes
 from platform_api.use_case.ping_mesh import PingMesh
 
