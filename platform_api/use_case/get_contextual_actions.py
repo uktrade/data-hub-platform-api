@@ -2,7 +2,7 @@ class GetTaggedDescriptors:
     def __init__(self, redis_mesh_nodes):
         self.redis_mesh_nodes = redis_mesh_nodes
 
-    def __call__(self, context_id):
+    def __call__(self, tag):
         nodes = self.redis_mesh_nodes.get_all()
 
         descriptors = [{
