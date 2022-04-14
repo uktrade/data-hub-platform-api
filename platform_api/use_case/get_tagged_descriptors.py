@@ -10,7 +10,6 @@ class GetTaggedDescriptors:
             "type": "safe",
             "doc": "Refer for Help",
             "tag": "dit:datahub:company",
-            "link": {"href": 'https://my-service.local/refer-for-help/#companyId'},
             "descriptor": [
                 {
                     "id": "companyId",
@@ -20,10 +19,20 @@ class GetTaggedDescriptors:
             ]
         } for _ in nodes]
 
+        links = {'dit:my-service:ReferForHelp': ({
+            'href': 'https://my-service.local/refer/~{companyId}',
+            'method': 'get'
+        }) for _ in nodes}
+
         return {
             'success': True,
-            'alps': {
-                'version': '1.0',
-                'descriptor': descriptors
+            'hypermedia': {
+                '_links': links
+            },
+            'semantics': {
+                'alps': {
+                    'version': '1.0',
+                    'descriptor': descriptors
+                }
             }
         }

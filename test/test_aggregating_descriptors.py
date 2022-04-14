@@ -22,9 +22,10 @@ def test_can_get_no_tagged_descriptors(execute):
     response = execute('get_tagged_descriptors', 'dit:datahub:company')
 
     assert response['success']
-    assert response['alps'] == {
+    assert response['hypermedia']['_links'] == {}
+    assert response['semantics']['alps'] == {
         'version': '1.0',
-        'descriptor': []
+        'descriptor': [],
     }
 
 
@@ -32,6 +33,14 @@ def test_can_get_one_tagged_descriptor(execute, service_simulator):
     execute('ping_mesh', id_='my-service', href='https://my-service.local/mesh')
 
     my_service_response = {
+        'hypermedia': {
+            '_links': {
+                'dit:my-service:ReferForHelp': {
+                    'href': 'https://my-service.local/refer/~{companyId}',
+                    'method': 'get'
+                }
+            }
+        },
         'semantics': {
             "alps": {
                 "version": "1.0",
@@ -42,7 +51,6 @@ def test_can_get_one_tagged_descriptor(execute, service_simulator):
                         "type": "safe",
                         "doc": "Refer for Help",
                         "tag": "dit:datahub:company",
-                        "link": {"href": 'https://my-service.local/mesh'},
                         "descriptor": [
                             {
                                 "id": "companyId",
@@ -63,13 +71,16 @@ def test_can_get_one_tagged_descriptor(execute, service_simulator):
     )
 
     response = execute('get_tagged_descriptors', 'dit:datahub:company')
-    assert response['alps']['descriptor'] == [
+    assert response['hypermedia']['_links']['dit:my-service:ReferForHelp'] == {
+        'href': 'https://my-service.local/refer/~{companyId}',
+        'method': 'get'
+    }
+    assert response['semantics']['alps']['descriptor'] == [
         {
             "name": "dit:my-service:ReferForHelp",
             "type": "safe",
             "doc": "Refer for Help",
             "tag": "dit:datahub:company",
-            "link": {"href": 'https://my-service.local/refer-for-help/#companyId'},
             "descriptor": [
                 {
                     "id": "companyId",
