@@ -1,3 +1,5 @@
+import json
+
 import pytest
 from httpretty import httpretty, HTTPretty
 
@@ -28,7 +30,7 @@ class ServiceSimulator:
         httpretty.register_uri(
             HTTPretty.GET,
             self._endpoint,
-            body=response
+            body=json.dumps(response)
         )
 
 
@@ -41,7 +43,7 @@ def execute():
 
 @pytest.fixture()
 def simulate(execute):
-    httpretty.enable(allow_net_connect=False, verbose=True)
+    httpretty.enable(allow_net_connect=False, verbose=False)
     yield ServiceSimulator(lambda **kwargs: execute('ping_mesh', **kwargs)).simulate
     httpretty.disable()
 
@@ -101,6 +103,96 @@ def test_can_get_one_tagged_descriptor(execute, simulate):
             "name": "dit:my-service:ReferForHelp",
             "type": "safe",
             "doc": "Refer for Help",
+            "tag": "dit:datahub:company",
+            "descriptor": [
+                {
+                    "id": "companyId",
+                    "name": "dit:datahub:company:id",
+                    "type": "semantic",
+                }
+            ]
+        }
+    ]
+
+
+def test_can_get_two_tagged_descriptors(execute, simulate):
+    with simulate('my-service', 'https://my-service.local/mesh') as service:
+        service.register({
+            'hypermedia': {
+                '_links': {
+                    'dit:my-service:ReferForHelp': {
+                        'href': 'https://my-service.local/refer-for-help/~{companyId}',
+                        'method': 'get'
+                    },
+                    'dit:my-service:ReferForInvestment': {
+                        'href': 'https://my-service.local/refer-for-investment/~{companyId}',
+                        'method': 'get'
+                    }
+                }
+            },
+            'semantics': {
+                "alps": {
+                    "version": "1.0",
+                    "id": "dit:my-service",
+                    "descriptor": [
+                        {
+                            "name": "dit:my-service:ReferForHelp",
+                            "type": "safe",
+                            "doc": "Refer for Help",
+                            "tag": "dit:datahub:company",
+                            "descriptor": [
+                                {
+                                    "id": "companyId",
+                                    "name": "dit:datahub:company:id",
+                                    "type": "semantic",
+                                }
+                            ]
+                        },
+                        {
+                            "name": "dit:my-service:ReferForInvestment",
+                            "type": "safe",
+                            "doc": "Refer for Investment",
+                            "tag": "dit:datahub:company",
+                            "descriptor": [
+                                {
+                                    "id": "companyId",
+                                    "name": "dit:datahub:company:id",
+                                    "type": "semantic",
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+        })
+
+    response = execute('get_tagged_descriptors', 'dit:datahub:company')
+    assert response['hypermedia']['_links']['dit:my-service:ReferForHelp'] == {
+        'href': 'https://my-service.local/refer-for-help/~{companyId}',
+        'method': 'get'
+    }
+    assert response['hypermedia']['_links']['dit:my-service:ReferForInvestment'] == {
+        'href': 'https://my-service.local/refer-for-investment/~{companyId}',
+        'method': 'get'
+    }
+    assert response['semantics']['alps']['descriptor'] == [
+        {
+            "name": "dit:my-service:ReferForHelp",
+            "type": "safe",
+            "doc": "Refer for Help",
+            "tag": "dit:datahub:company",
+            "descriptor": [
+                {
+                    "id": "companyId",
+                    "name": "dit:datahub:company:id",
+                    "type": "semantic",
+                }
+            ]
+        },
+        {
+            "name": "dit:my-service:ReferForInvestment",
+            "type": "safe",
+            "doc": "Refer for Investment",
             "tag": "dit:datahub:company",
             "descriptor": [
                 {
