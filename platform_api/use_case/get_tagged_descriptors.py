@@ -37,7 +37,7 @@ class DocumentBuilder:
             'semantics': {
                 'alps': {
                     'version': '1.0',
-                    'descriptor': self.target_document['semantics']['alps']['descriptor']
+                    'descriptor': self._descriptors
                 }
             }
         }
