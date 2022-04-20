@@ -19,7 +19,6 @@ class DocumentBuilder:
 
     def to_document(self):
         return {
-            'success': True,
             'hypermedia': {
                 '_links': self._target_links
             },
@@ -45,7 +44,11 @@ class GetTaggedDescriptors:
         builder = DocumentBuilder()
 
         if len(nodes) < 1:
-            return builder.to_document()
+            return {
+                'success': True,
+                'hypermedia': builder.to_document()['hypermedia'],
+                'semantics': builder.to_document()['semantics']
+            }
 
         source_document = self._to_profile(nodes[0])
         for descriptor in source_document['semantics']['alps']['descriptor']:
