@@ -5,16 +5,17 @@ class DocumentBuilder:
     def __init__(self):
         self._descriptors = []
         self._target_links = {}
+        self._source_links = {}
 
     def add_descriptor(self, descriptor):
         self._descriptors.append(descriptor)
         self.add_link(descriptor['name'])
 
     def register_links(self, links):
-        self._links = links
+        self._source_links = links
 
     def add_link(self, name):
-        self._target_links[name] = self._links[name]
+        self._target_links[name] = self._source_links[name]
 
     def to_document(self):
         return {
