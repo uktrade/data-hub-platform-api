@@ -32,7 +32,7 @@ class GetTaggedDescriptors:
             def register_links(self, links):
                 self._links = links
 
-            def add_link(self, name, object):
+            def add_link(self, name):
                 target_document['hypermedia']['_links'][name] = self._links[name]
 
             def to_document(self):
@@ -49,8 +49,6 @@ class GetTaggedDescriptors:
             if descriptor['tag'] == tag:
                 builder.register_links(source_document['hypermedia']['_links'])
                 builder.add_descriptor(descriptor)
-                builder.add_link(descriptor['name'], source_document['hypermedia']['_links'][
-                    descriptor['name']]
-                                 )
+                builder.add_link(descriptor['name'])
 
         return builder.to_document()
