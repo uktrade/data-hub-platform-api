@@ -27,7 +27,18 @@ class DocumentBuilder:
         self.target_document['hypermedia']['_links'][name] = self._links[name]
 
     def to_document(self):
-        return self.target_document
+        return {
+            'success': True,
+            'hypermedia': {
+                '_links': self.target_document['hypermedia']['_links']
+            },
+            'semantics': {
+                'alps': {
+                    'version': '1.0',
+                    'descriptor': self.target_document['semantics']['alps']['descriptor']
+                }
+            }
+        }
 
 
 class GetTaggedDescriptors:
