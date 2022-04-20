@@ -34,7 +34,7 @@ class DocumentBuilder:
         return {
             'success': True,
             'hypermedia': {
-                '_links': self.target_document['hypermedia']['_links']
+                '_links': self._target_links
             },
             'semantics': {
                 'alps': {
