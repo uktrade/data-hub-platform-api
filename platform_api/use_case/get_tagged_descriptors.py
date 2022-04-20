@@ -34,13 +34,12 @@ class GetTaggedDescriptors:
                 self._links = links
 
             def add_link(self, name):
-                target_document['hypermedia']['_links'][name] = self._links[name]
+                self.target_document['hypermedia']['_links'][name] = self._links[name]
 
             def to_document(self):
                 return self.target_document
 
         builder = DocumentBuilder()
-        target_document = builder.target_document
 
         if len(nodes) < 1:
             return builder.to_document()
