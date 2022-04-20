@@ -11,18 +11,22 @@ class GetTaggedDescriptors:
     def __call__(self, tag):
         nodes = self.redis_mesh_nodes.get_all()
 
-        target_document = {
-            'success': True,
-            'hypermedia': {
-                '_links': {}
-            },
-            'semantics': {
-                'alps': {
-                    'version': '1.0',
-                    'descriptor': []
+        class DocumentBuilder:
+            def __init__(self):
+                self.target_document = {
+                    'success': True,
+                    'hypermedia': {
+                        '_links': {}
+                    },
+                    'semantics': {
+                        'alps': {
+                            'version': '1.0',
+                            'descriptor': []
+                        }
+                    }
                 }
-            }
-        }
+
+        target_document = DocumentBuilder().target_document
 
         if len(nodes) < 1:
             return target_document
