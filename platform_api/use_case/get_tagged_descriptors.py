@@ -20,7 +20,6 @@ class DocumentBuilder:
 
     def add_descriptor(self, descriptor):
         self._descriptors.append(descriptor)
-        self.target_document['semantics']['alps']['descriptor'].append(descriptor)
         self.add_link(descriptor['name'])
 
     def register_links(self, links):
@@ -28,7 +27,6 @@ class DocumentBuilder:
 
     def add_link(self, name):
         self._target_links[name] = self._links[name]
-        self.target_document['hypermedia']['_links'][name] = self._links[name]
 
     def to_document(self):
         return {
