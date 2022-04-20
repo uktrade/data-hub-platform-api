@@ -3,6 +3,7 @@ import requests
 
 class DocumentBuilder:
     def __init__(self):
+        self._descriptors = []
         self.target_document = {
             'success': True,
             'hypermedia': {
@@ -17,6 +18,7 @@ class DocumentBuilder:
         }
 
     def add_descriptor(self, descriptor):
+        self._descriptors.append(descriptor)
         self.target_document['semantics']['alps']['descriptor'].append(descriptor)
         self.add_link(descriptor['name'])
 
