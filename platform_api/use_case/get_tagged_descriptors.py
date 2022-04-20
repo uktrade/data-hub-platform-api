@@ -3,12 +3,12 @@ import requests
 
 class DocumentBuilder:
     def __init__(self):
-        self._descriptors = []
+        self._target_descriptors = []
         self._target_links = {}
         self._source_links = {}
 
     def add_descriptor(self, descriptor):
-        self._descriptors.append(descriptor)
+        self._target_descriptors.append(descriptor)
         self.add_link(descriptor['name'])
 
     def register_links(self, links):
@@ -26,7 +26,7 @@ class DocumentBuilder:
             'semantics': {
                 'alps': {
                     'version': '1.0',
-                    'descriptor': self._descriptors
+                    'descriptor': self._target_descriptors
                 }
             }
         }
