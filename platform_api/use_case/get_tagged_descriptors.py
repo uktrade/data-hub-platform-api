@@ -1,6 +1,35 @@
 import requests
 
 
+class DocumentBuilder:
+    def __init__(self):
+        self.target_document = {
+            'success': True,
+            'hypermedia': {
+                '_links': {}
+            },
+            'semantics': {
+                'alps': {
+                    'version': '1.0',
+                    'descriptor': []
+                }
+            }
+        }
+
+    def add_descriptor(self, descriptor):
+        self.target_document['semantics']['alps']['descriptor'].append(descriptor)
+        self.add_link(descriptor['name'])
+
+    def register_links(self, links):
+        self._links = links
+
+    def add_link(self, name):
+        self.target_document['hypermedia']['_links'][name] = self._links[name]
+
+    def to_document(self):
+        return self.target_document
+
+
 class GetTaggedDescriptors:
     def __init__(self, redis_mesh_nodes):
         self.redis_mesh_nodes = redis_mesh_nodes
@@ -10,34 +39,6 @@ class GetTaggedDescriptors:
 
     def __call__(self, tag):
         nodes = self.redis_mesh_nodes.get_all()
-
-        class DocumentBuilder:
-            def __init__(self):
-                self.target_document = {
-                    'success': True,
-                    'hypermedia': {
-                        '_links': {}
-                    },
-                    'semantics': {
-                        'alps': {
-                            'version': '1.0',
-                            'descriptor': []
-                        }
-                    }
-                }
-
-            def add_descriptor(self, descriptor):
-                self.target_document['semantics']['alps']['descriptor'].append(descriptor)
-                self.add_link(descriptor['name'])
-
-            def register_links(self, links):
-                self._links = links
-
-            def add_link(self, name):
-                self.target_document['hypermedia']['_links'][name] = self._links[name]
-
-            def to_document(self):
-                return self.target_document
 
         builder = DocumentBuilder()
 
