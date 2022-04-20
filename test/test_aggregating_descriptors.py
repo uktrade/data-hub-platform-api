@@ -244,7 +244,7 @@ def test_can_filter_out_irrelevant_tags(execute, simulate):
     assert response['semantics']['alps']['descriptor'] == []
 
 
-def test_can_filter_out_irrelevant_tags2(execute, simulate):
+def test_can_filter_out_irrelevant_tags_multiple(execute, simulate):
     with simulate('my-service', 'https://my-service.local/mesh') as service:
         service.register({
             'hypermedia': {
