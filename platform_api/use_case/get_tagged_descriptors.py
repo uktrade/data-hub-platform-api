@@ -55,8 +55,4 @@ class GetTaggedDescriptors:
         return self._successful(builder)
 
     def _successful(self, builder):
-        return {
-            'success': True,
-            'hypermedia': builder.to_document()['hypermedia'],
-            'semantics': builder.to_document()['semantics']
-        }
+        return {'success': True, **builder.to_document()}
