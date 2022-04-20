@@ -33,7 +33,7 @@ class GetTaggedDescriptors:
         target_document = builder.target_document
 
         if len(nodes) < 1:
-            return target_document
+            return builder.to_document()
 
         source_document = self._to_profile(nodes[0])
         for descriptor in source_document['semantics']['alps']['descriptor']:
