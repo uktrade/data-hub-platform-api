@@ -26,7 +26,11 @@ class GetTaggedDescriptors:
                     }
                 }
 
-        target_document = DocumentBuilder().target_document
+            def to_document(self):
+                return self.target_document
+
+        builder = DocumentBuilder()
+        target_document = builder.target_document
 
         if len(nodes) < 1:
             return target_document
@@ -38,4 +42,4 @@ class GetTaggedDescriptors:
                 target_document['hypermedia']['_links'][descriptor['name']] = source_document['hypermedia']['_links'][
                     descriptor['name']]
 
-        return target_document
+        return builder.to_document()
