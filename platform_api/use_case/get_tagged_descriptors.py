@@ -5,18 +5,6 @@ class DocumentBuilder:
     def __init__(self):
         self._descriptors = []
         self._target_links = {}
-        self.target_document = {
-            'success': True,
-            'hypermedia': {
-                '_links': {}
-            },
-            'semantics': {
-                'alps': {
-                    'version': '1.0',
-                    'descriptor': []
-                }
-            }
-        }
 
     def add_descriptor(self, descriptor):
         self._descriptors.append(descriptor)
