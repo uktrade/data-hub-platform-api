@@ -50,6 +50,5 @@ class GetTaggedDescriptors:
             if descriptor['tag'] == tag:
                 builder.register_links(source_document['hypermedia']['_links'])
                 builder.add_descriptor(descriptor)
-                builder.add_link(descriptor['name'])
 
         return builder.to_document()
