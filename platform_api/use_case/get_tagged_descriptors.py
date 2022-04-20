@@ -53,4 +53,8 @@ class GetTaggedDescriptors:
                 builder.register_links(source_document['hypermedia']['_links'])
                 builder.add_descriptor(descriptor)
 
-        return builder.to_document()
+        return {
+            'success': True,
+            'hypermedia': builder.to_document()['hypermedia'],
+            'semantics': builder.to_document()['semantics']
+        }
