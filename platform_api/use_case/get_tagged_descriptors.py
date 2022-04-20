@@ -11,17 +11,28 @@ class GetTaggedDescriptors:
     def __call__(self, tag):
         nodes = self.redis_mesh_nodes.get_all()
 
-        profiles = [self._to_profile(node) for node in nodes]
-
-        return {
+        document = {
             'success': True,
             'hypermedia': {
-                '_links': profiles[0]['hypermedia']['_links'] if len(profiles) > 0 else {}
+                '_links': {}
             },
             'semantics': {
                 'alps': {
                     'version': '1.0',
-                    'descriptor': profiles[0]['semantics']['alps']['descriptor'] if len(profiles) > 0 else []
+                    'descriptor': []
                 }
             }
         }
+
+        if len(nodes) < 1:
+            return document
+
+        full_profile = self._to_profile(nodes[0])
+
+        if full_profile['semantics']['alps']['descriptor'][0]['tag'] != tag:
+            return document
+
+        document['hypermedia']['_links'] = full_profile['hypermedia']['_links']
+        document['semantics']['alps']['descriptor'] = full_profile['semantics']['alps']['descriptor']
+
+        return document

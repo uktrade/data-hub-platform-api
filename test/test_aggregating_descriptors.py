@@ -203,3 +203,42 @@ def test_can_get_two_tagged_descriptors(execute, simulate):
             ]
         }
     ]
+
+
+def test_can_filter_out_irrelevant_tags(execute, simulate):
+    with simulate('my-service', 'https://my-service.local/mesh') as service:
+        service.register({
+            'hypermedia': {
+                '_links': {
+                    'dit:my-service:ReferForHelp': {
+                        'href': 'https://my-service.local/refer-for-help/~{companyId}',
+                        'method': 'get'
+                    }
+                }
+            },
+            'semantics': {
+                "alps": {
+                    "version": "1.0",
+                    "id": "dit:my-service",
+                    "descriptor": [
+                        {
+                            "name": "dit:my-service:ReferForHelp",
+                            "type": "safe",
+                            "doc": "Refer for Help",
+                            "tag": "dit:datahub:company",
+                            "descriptor": [
+                                {
+                                    "id": "companyId",
+                                    "name": "dit:datahub:company:id",
+                                    "type": "semantic",
+                                }
+                            ]
+                        },
+                    ]
+                }
+            },
+        })
+
+    response = execute('get_tagged_descriptors', 'dit:datahub:contact')
+    assert response['hypermedia']['_links'] == {}
+    assert response['semantics']['alps']['descriptor'] == []
