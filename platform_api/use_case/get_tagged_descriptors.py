@@ -29,8 +29,11 @@ class GetTaggedDescriptors:
             def add_descriptor(self, descriptor):
                 self.target_document['semantics']['alps']['descriptor'].append(descriptor)
 
+            def register_links(self, links):
+                self._links = links
+
             def add_link(self, name, object):
-                target_document['hypermedia']['_links'][name] = object
+                target_document['hypermedia']['_links'][name] = self._links[name]
 
             def to_document(self):
                 return self.target_document
@@ -44,6 +47,7 @@ class GetTaggedDescriptors:
         source_document = self._to_profile(nodes[0])
         for descriptor in source_document['semantics']['alps']['descriptor']:
             if descriptor['tag'] == tag:
+                builder.register_links(source_document['hypermedia']['_links'])
                 builder.add_descriptor(descriptor)
                 builder.add_link(descriptor['name'], source_document['hypermedia']['_links'][
                     descriptor['name']]
