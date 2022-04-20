@@ -4,6 +4,7 @@ import requests
 class DocumentBuilder:
     def __init__(self):
         self._descriptors = []
+        self._target_links = {}
         self.target_document = {
             'success': True,
             'hypermedia': {
@@ -26,6 +27,7 @@ class DocumentBuilder:
         self._links = links
 
     def add_link(self, name):
+        self._target_links[name] = self._links[name]
         self.target_document['hypermedia']['_links'][name] = self._links[name]
 
     def to_document(self):
