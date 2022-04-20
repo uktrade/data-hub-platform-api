@@ -28,6 +28,7 @@ class GetTaggedDescriptors:
 
             def add_descriptor(self, descriptor):
                 self.target_document['semantics']['alps']['descriptor'].append(descriptor)
+                self.add_link(descriptor['name'])
 
             def register_links(self, links):
                 self._links = links
