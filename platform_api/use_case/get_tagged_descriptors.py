@@ -11,7 +11,7 @@ class GetTaggedDescriptors:
     def __call__(self, tag):
         nodes = self.redis_mesh_nodes.get_all()
 
-        document = {
+        target_document = {
             'success': True,
             'hypermedia': {
                 '_links': {}
@@ -25,14 +25,13 @@ class GetTaggedDescriptors:
         }
 
         if len(nodes) < 1:
-            return document
+            return target_document
 
-        full_profile = self._to_profile(nodes[0])
+        source_document = self._to_profile(nodes[0])
+        for descriptor in source_document['semantics']['alps']['descriptor']:
+            if descriptor['tag'] == tag:
+                target_document['semantics']['alps']['descriptor'].append(descriptor)
+                target_document['hypermedia']['_links'][descriptor['name']] = source_document['hypermedia']['_links'][
+                    descriptor['name']]
 
-        if full_profile['semantics']['alps']['descriptor'][0]['tag'] != tag:
-            return document
-
-        document['hypermedia']['_links'] = full_profile['hypermedia']['_links']
-        document['semantics']['alps']['descriptor'] = full_profile['semantics']['alps']['descriptor']
-
-        return document
+        return target_document
