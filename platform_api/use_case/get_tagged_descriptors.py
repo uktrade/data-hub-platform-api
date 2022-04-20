@@ -54,5 +54,5 @@ class GetTaggedDescriptors:
 
         return self._successful(builder.to_document())
 
-    def _successful(self, builder):
-        return {'success': True, **builder}
+    def _successful(self, document):
+        return {'success': True, **document}
