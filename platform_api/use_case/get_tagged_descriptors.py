@@ -32,14 +32,14 @@ class DocumentBuilder:
 
 
 class GetTaggedDescriptors:
-    def __init__(self, redis_mesh_nodes):
-        self.redis_mesh_nodes = redis_mesh_nodes
+    def __init__(self, mesh_nodes_gateway):
+        self.mesh_nodes_gateway = mesh_nodes_gateway
 
     def _to_profile(self, node):
         return requests.get(node.href).json()
 
     def __call__(self, tag):
-        nodes = self.redis_mesh_nodes.get_all()
+        nodes = self.mesh_nodes_gateway.get_all()
 
         builder = DocumentBuilder()
 
