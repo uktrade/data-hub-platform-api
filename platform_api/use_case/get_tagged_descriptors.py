@@ -1,6 +1,3 @@
-import requests
-
-
 class DocumentBuilder:
     def __init__(self):
         self._target_descriptors = []
@@ -36,9 +33,6 @@ class GetTaggedDescriptors:
         self.node_profile_gateway = node_profile_gateway
         self.mesh_nodes_gateway = mesh_nodes_gateway
 
-    def _to_profile(self, node):
-        return self.node_profile_gateway.to_profile(node)
-
     def __call__(self, tag):
         nodes = self.mesh_nodes_gateway.get_all()
 
@@ -47,7 +41,8 @@ class GetTaggedDescriptors:
         if len(nodes) < 1:
             return self._successful(builder.to_document())
 
-        source_document = self._to_profile(nodes[0])
+        node = nodes[0]
+        source_document = self.node_profile_gateway.to_profile(node)
         for descriptor in source_document['semantics']['alps']['descriptor']:
             if descriptor['tag'] == tag:
                 builder.register_links(source_document['hypermedia']['_links'])
