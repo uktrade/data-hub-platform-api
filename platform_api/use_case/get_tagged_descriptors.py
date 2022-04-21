@@ -32,7 +32,8 @@ class DocumentBuilder:
 
 
 class GetTaggedDescriptors:
-    def __init__(self, mesh_nodes_gateway):
+    def __init__(self, mesh_nodes_gateway, node_profile_gateway):
+        self.node_profile_gateway = node_profile_gateway
         self.mesh_nodes_gateway = mesh_nodes_gateway
 
     def _to_profile(self, node):
