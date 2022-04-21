@@ -4,3 +4,6 @@ class MeshNodeProfile:
 
     def __getitem__(self, item):
         return self._profile[item]
+
+    def get_semantic_descriptors(self):
+        return self._profile['semantics']['alps']['descriptor']
