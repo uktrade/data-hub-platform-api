@@ -1,5 +1,7 @@
 import requests
 
+from platform_api.domain.mesh_node_profile import MeshNodeProfile
+
 
 class HttpNodeProfile:
     def __init__(self, mesh_nodes_gateway):
@@ -12,4 +14,4 @@ class HttpNodeProfile:
         return profiles
 
     def to_profile(self, node):
-        return requests.get(node.href).json()
+        return MeshNodeProfile(profile=requests.get(node.href).json())
