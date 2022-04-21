@@ -43,7 +43,7 @@ class GetTaggedDescriptors:
         source_document = profiles[0]
         for descriptor in source_document.get_semantic_descriptors():
             if descriptor['tag'] == tag:
-                builder.register_links(source_document['hypermedia']['_links'])
+                builder.register_links(source_document.get_hypermedia_links())
                 builder.add_descriptor(descriptor)
 
         return self._successful(builder.to_document())

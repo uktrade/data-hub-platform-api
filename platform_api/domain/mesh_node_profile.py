@@ -7,3 +7,6 @@ class MeshNodeProfile:
 
     def get_semantic_descriptors(self):
         return self._profile['semantics']['alps']['descriptor']
+
+    def get_hypermedia_links(self):
+        return self._profile['hypermedia']['_links']
