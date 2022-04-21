@@ -34,15 +34,14 @@ class GetTaggedDescriptors:
         self.mesh_nodes_gateway = mesh_nodes_gateway
 
     def __call__(self, tag):
-        nodes = self.mesh_nodes_gateway.get_all()
+        profiles = self.node_profile_gateway.get_all()
 
         builder = DocumentBuilder()
 
-        if len(nodes) < 1:
+        if len(profiles) < 1:
             return self._successful(builder.to_document())
 
-        node = nodes[0]
-        source_document = self.node_profile_gateway.to_profile(node)
+        source_document = profiles[0]
         for descriptor in source_document['semantics']['alps']['descriptor']:
             if descriptor['tag'] == tag:
                 builder.register_links(source_document['hypermedia']['_links'])
