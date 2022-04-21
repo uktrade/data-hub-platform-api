@@ -40,10 +40,10 @@ class GetTaggedDescriptors:
         if len(profiles) < 1:
             return self._successful(builder.to_document())
 
-        source_document = profiles[0]
-        for descriptor in source_document.get_semantic_descriptors():
+        profile = profiles[0]
+        for descriptor in profile.get_semantic_descriptors():
             if descriptor['tag'] == tag:
-                builder.register_links(source_document.get_hypermedia_links())
+                builder.register_links(profile.get_hypermedia_links())
                 builder.add_descriptor(descriptor)
 
         return self._successful(builder.to_document())
