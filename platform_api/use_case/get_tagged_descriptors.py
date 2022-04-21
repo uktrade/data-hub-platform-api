@@ -37,7 +37,7 @@ class GetTaggedDescriptors:
         self.mesh_nodes_gateway = mesh_nodes_gateway
 
     def _to_profile(self, node):
-        return requests.get(node.href).json()
+        return self.node_profile_gateway.to_profile(node)
 
     def __call__(self, tag):
         nodes = self.mesh_nodes_gateway.get_all()
