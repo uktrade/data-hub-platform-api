@@ -20,7 +20,7 @@ class UseCaseExecutor:
         mesh_nodes_gateway = RedisMeshNodes(self._redis.get_client())
         self.use_cases = {
             'flush_redis_database': lambda: self._redis.get_client().flushdb(),
-            'get_tagged_descriptors': GetTaggedDescriptors(mesh_nodes_gateway, HttpNodeProfile(mesh_nodes_gateway)),
+            'get_tagged_descriptors': GetTaggedDescriptors(HttpNodeProfile(mesh_nodes_gateway)),
             'get_mesh_nodes': GetMeshNodes(mesh_nodes_gateway),
             'ping_mesh': PingMesh(mesh_nodes_gateway),
         }
