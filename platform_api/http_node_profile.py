@@ -10,8 +10,8 @@ class HttpNodeProfile:
     def get_all(self):
         profiles = []
         for node in self.mesh_nodes_gateway.get_all():
-            profiles.append(self.to_profile(node))
+            profiles.append(self._to_profile(node))
         return profiles
 
-    def to_profile(self, node):
+    def _to_profile(self, node):
         return MeshNodeProfile(profile=requests.get(node.href).json())
